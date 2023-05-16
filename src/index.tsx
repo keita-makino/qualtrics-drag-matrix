@@ -3,9 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { Container } from './components';
 import { GlobalStateProvider } from './store';
 import { Bind } from './types';
-import { DragSelectProvider } from './contexts/DragSelectContext';
 
-const matrixRender = (target: HTMLElement, bind: Bind) => {
+const dragMatrixRender = (target: HTMLElement, bind: Bind) => {
   const container = document.createElement('div');
   container.setAttribute('id', `MapContainer${target.id}`);
 
@@ -29,4 +28,4 @@ const matrixRender = (target: HTMLElement, bind: Bind) => {
   directionContainer.style.display = 'none';
 };
 
-(window as any).calendarRender = matrixRender;
+(window as any).dragMatrixRender = dragMatrixRender;
