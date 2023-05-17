@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import { Box, Button, styled } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
+import { Box, Button, Grid, styled } from '@mui/material';
 import { useDragSelect } from '../contexts/DragSelectContext';
 import { useGlobalContext, useGlobalStateUpdateContext } from '../store';
+import { useWindowSize } from './useWindowSize';
 
 export type InputCellProps = {
   row: number;
@@ -14,7 +15,8 @@ export const InputFormCell: React.FC<InputCellProps> = (
   const state = useGlobalContext();
   const inputElement = useRef(null);
   const ds = useDragSelect();
-  const [variant, setVariant] = React.useState<any>('outlined');
+  const [variant, setVariant] = useState<any>('outlined');
+  const windowSize = useWindowSize();
 
   useEffect(() => {
     const element = inputElement.current;
@@ -50,19 +52,37 @@ export const InputFormCell: React.FC<InputCellProps> = (
   }, [state]);
 
   return (
-    <Box width={'7.5rem'} height={'100%'} margin={'0 0.25rem'}>
+    <Grid
+      container
+      item
+      xl
+      lg
+      md
+      sm
+      xs
+      justifyContent={'center'}
+      alignContent={'center'}
+      sx={{
+        height:
+          // windowSize.width < 900
+          //   ? Math.max(...state.rowHeights) + 24
+          //   : Math.max(...state.rowHeights),
+          Math.max(...state.rowHeights),
+      }}
+    >
       <Button
         ref={inputElement}
         variant={variant}
         disabled={state.isDefaultOptionSelected}
         sx={{
-          width: '100%',
-          height: '100%',
-          borderRadius: 0,
+          height: '95%',
+          width: '95%',
+          borderRadius: 1,
+          boxSizing: 'border-box',
         }}
       >
         {' '}
       </Button>
-    </Box>
+    </Grid>
   );
 };

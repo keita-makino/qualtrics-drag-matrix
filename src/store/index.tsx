@@ -1,14 +1,15 @@
-import { ReactNode, useContext, useReducer, useState } from 'react';
-import { createContext } from 'react';
-import { editInput } from './editInput';
-import { Input, Bind } from '../types';
+import React, { ReactNode, createContext, useContext, useReducer } from 'react';
+import { Bind, Input } from '../types';
 import { Choice } from '../types/Input';
-import React from 'react';
+import { editInput } from './editInput';
+import { editHeaderHeights, editRowHeights } from './editHeight';
 
 export type GlobalState = {
   inputs: Input[];
   choices: Choice[];
   bind: Bind;
+  headerHeights: number[];
+  rowHeights: number[];
   isDefaultOptionSelected: boolean;
 };
 
@@ -16,15 +17,19 @@ export const initialState: GlobalState = {
   inputs: [],
   choices: [],
   bind: false,
+  headerHeights: [],
+  rowHeights: [],
   isDefaultOptionSelected: false,
 };
 
 export type Action =
   | {
-      type: 'ADD_DEFAULTOPTION';
-      defaultOption: {
-        label: string;
-      };
+      type: 'INITIALIZE_ROWHEIGHTS';
+      numberOfRows: number;
+    }
+  | {
+      type: 'INITIALIZE_HEADERHEIGHTS';
+      numberOfHeaders: number;
     }
   | {
       type: 'ADD_INPUTS';
@@ -43,7 +48,14 @@ export type Action =
       type: 'CLEAR_INPUT';
     }
   | {
-      type: 'TOGGLE_DEFAULTOPTION';
+      type: 'SET_HEADERHEIGHTS';
+      index: number;
+      height: number;
+    }
+  | {
+      type: 'SET_ROWHEIGHTS';
+      index: number;
+      height: number;
     };
 
 export const reducer = (state: GlobalState, action: Action): GlobalState => {
@@ -68,11 +80,20 @@ export const reducer = (state: GlobalState, action: Action): GlobalState => {
           choices: [],
         })),
       };
-    case 'TOGGLE_DEFAULTOPTION':
+    case 'INITIALIZE_ROWHEIGHTS':
       return {
         ...state,
-        isDefaultOptionSelected: !state.isDefaultOptionSelected,
+        rowHeights: Array.from({ length: action.numberOfRows }, () => 0),
       };
+    case 'INITIALIZE_HEADERHEIGHTS':
+      return {
+        ...state,
+        headerHeights: Array.from({ length: action.numberOfHeaders }, () => 0),
+      };
+    case 'SET_HEADERHEIGHTS':
+      return editHeaderHeights(state, action.index, action.height);
+    case 'SET_ROWHEIGHTS':
+      return editRowHeights(state, action.index, action.height);
     default:
       return state;
   }

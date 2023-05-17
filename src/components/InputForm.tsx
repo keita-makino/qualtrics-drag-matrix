@@ -1,12 +1,9 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Grid, Typography, styled } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useGlobalContext, useGlobalStateUpdateContext } from '../store';
-import { InputFormRow, StyledGrid } from './InputFormRow';
-import {
-  DragSelectProvider,
-  useDragSelect,
-} from '../contexts/DragSelectContext';
-import { InputFormCell } from './InputFormCell';
+import { useDragSelect } from '../contexts/DragSelectContext';
+import { InputHeader } from './InputHeader';
+import { InputFormColumn } from './InputFormColumn';
 
 type Props = {};
 
@@ -29,8 +26,6 @@ export const InputForm: React.FC<Props> = (props) => {
             const rowItems = selected.filter(
               (item2: any) => item2.row === item
             );
-
-            console.log(rowItems)
 
             if (rowItems.length > 0) {
               update({
@@ -73,42 +68,10 @@ export const InputForm: React.FC<Props> = (props) => {
       xs={12}
       id={'drag-select-area'}
     >
-      <StyledGrid
-        item
-        container
-        xl={12}
-        lg={12}
-        md={12}
-        sm={12}
-        xs={12}
-        justifyContent={'center'}
-        alignItems={'center'}
-      >
-        <Box width={'16rem'}>
-          <Typography fontSize={'0.5rem'} sx={{ userSelect: 'none' }}>
-            {' '}
-          </Typography>
-        </Box>
-        {state.choices.map((item, index: number) => {
-          return (
-            <Box width={'8rem'} display={'flex'} justifyContent={'center'}>
-              <Typography
-                sx={{
-                  padding: '0 !important',
-                  borderRadius: 0,
-                  width: '7.5rem',
-                  textAlign: 'center',
-                }}
-              >
-                {item.label}
-              </Typography>
-            </Box>
-          );
-        })}
-      </StyledGrid>
-      {state.inputs.map((item: { label: string }, index: number) => {
-        return <InputFormRow label={item.label} index={index} />;
-      })}
+      <InputHeader />
+      {state.choices.map((item, index: number) => (
+        <InputFormColumn index={index} />
+      ))}
     </Grid>
   );
 };

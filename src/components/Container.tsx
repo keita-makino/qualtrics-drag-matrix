@@ -37,6 +37,10 @@ export const Container: React.FC<Props> = (props) => {
           choices: [],
         })),
       });
+      update({
+        type: 'INITIALIZE_ROWHEIGHTS',
+        numberOfRows: [...labelHTMLElements].length + 1,
+      });
     }
     if ([...choiceHTMLElements].length > 0) {
       update({
@@ -55,6 +59,17 @@ export const Container: React.FC<Props> = (props) => {
               : '',
             value: index,
           })),
+      });
+      update({
+        type: 'INITIALIZE_HEADERHEIGHTS',
+        numberOfHeaders:
+          [...choiceHTMLElements].filter(
+            (item, index, array) =>
+              array.findIndex(
+                (item2) =>
+                  item2.children[0].textContent === item.children[0].textContent
+              ) === index
+          ).length + 1,
       });
     }
   }, []);
