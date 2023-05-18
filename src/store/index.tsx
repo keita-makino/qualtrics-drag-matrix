@@ -10,7 +10,7 @@ export type GlobalState = {
   bind: Bind;
   headerHeights: number[];
   rowHeights: number[];
-  isDefaultOptionSelected: boolean;
+  isMobile: boolean;
 };
 
 export const initialState: GlobalState = {
@@ -19,7 +19,7 @@ export const initialState: GlobalState = {
   bind: false,
   headerHeights: [],
   rowHeights: [],
-  isDefaultOptionSelected: false,
+  isMobile: false,
 };
 
 export type Action =
@@ -56,6 +56,10 @@ export type Action =
       type: 'SET_ROWHEIGHTS';
       index: number;
       height: number;
+    }
+  | {
+      type: 'SET_MOBILE';
+      value: boolean;
     };
 
 export const reducer = (state: GlobalState, action: Action): GlobalState => {
@@ -75,7 +79,7 @@ export const reducer = (state: GlobalState, action: Action): GlobalState => {
     case 'CLEAR_INPUT':
       return {
         ...state,
-        inputs: state.inputs.map((item) => ({
+        inputs: [...state.inputs].map((item) => ({
           ...item,
           choices: [],
         })),
@@ -94,6 +98,11 @@ export const reducer = (state: GlobalState, action: Action): GlobalState => {
       return editHeaderHeights(state, action.index, action.height);
     case 'SET_ROWHEIGHTS':
       return editRowHeights(state, action.index, action.height);
+    case 'SET_MOBILE':
+      return {
+        ...state,
+        isMobile: action.value,
+      };
     default:
       return state;
   }

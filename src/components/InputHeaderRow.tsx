@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@mui/material';
 import { useGlobalContext, useGlobalStateUpdateContext } from '../store';
 import React, { useEffect, useLayoutEffect, useSyncExternalStore } from 'react';
-import { useWindowSize } from './useWindowSize';
+import { useWindowSize } from 'react-use';
 
 type InputHeaderRowProps = {
   label: string;
@@ -39,9 +39,9 @@ export const InputHeaderRow: React.FC<InputHeaderRowProps> = (props) => {
         height:
           props.index === 0
             ? Math.max(...state.headerHeights)
-            : // : windowSize.width < 900
-              // ? Math.max(...state.rowHeights) + 24
-              Math.max(...state.rowHeights),
+            : windowSize.width < 900
+            ? Math.max(...state.rowHeights) + 24
+            : Math.max(...state.rowHeights),
         boxSizing: 'border-box',
         padding: '0.5rem',
       }}
@@ -49,8 +49,8 @@ export const InputHeaderRow: React.FC<InputHeaderRowProps> = (props) => {
       <Typography
         sx={{
           userSelect: 'none',
-          // color: windowSize.width < 900 ? '#aaaaaa' : 'unset',
-          // fontWeight: windowSize.width < 900 ? '700 !important' : 'unset',
+          color: windowSize.width < 900 ? '#aaaaaa' : 'unset',
+          fontWeight: windowSize.width < 900 ? '700 !important' : 'unset',
         }}
         ref={ref}
       >

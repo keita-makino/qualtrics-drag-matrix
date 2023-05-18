@@ -1,21 +1,17 @@
 import React, { useEffect } from 'react';
 import { ClearButton } from './ClearButton';
-import { useGlobalContext, useGlobalStateUpdateContext } from '../store';
+import { useGlobalStateUpdateContext } from '../store';
 import { InputForm } from './InputForm';
-import { Grid, Switch, Typography } from '@mui/material';
-import { Bind } from '../types';
-import {
-  DragSelectProvider,
-  useDragSelect,
-} from '../contexts/DragSelectContext';
+import { Grid } from '@mui/material';
+import { DragSelectProvider } from '../contexts/DragSelectContext';
+import { useWindowSize } from 'react-use';
 
 type Props = {
   directionContainer: HTMLElement;
-  bind: Bind;
+  isMobile: boolean;
 };
 
 export const Container: React.FC<Props> = (props) => {
-  const state = useGlobalContext();
   const update = useGlobalStateUpdateContext();
 
   const inputHTMLElements =
@@ -74,20 +70,24 @@ export const Container: React.FC<Props> = (props) => {
     }
   }, []);
 
+  const [area, setArea] = React.useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setArea(document.getElementById('drag-select-area'));
+  }, []);
+
   return (
-    <Grid container>
-      <DragSelectProvider
-        settings={{
-          draggability: false,
-          area: state.isDefaultOptionSelected
-            ? undefined
-            : document.getElementById('drag-select-area') || undefined,
-          multiSelectMode: true,
-        }}
-      >
+    <DragSelectProvider
+      settings={{
+        draggability: false,
+        area: area!,
+        multiSelectMode: true,
+      }}
+    >
+      <Grid container id={'drag-select-area'}>
         <InputForm />
-      </DragSelectProvider>
-      <ClearButton />
-    </Grid>
+        <ClearButton />
+      </Grid>
+    </DragSelectProvider>
   );
 };

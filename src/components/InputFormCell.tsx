@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Box, Button, Grid, styled } from '@mui/material';
 import { useDragSelect } from '../contexts/DragSelectContext';
 import { useGlobalContext, useGlobalStateUpdateContext } from '../store';
-import { useWindowSize } from './useWindowSize';
+import { useWindowSize } from 'react-use';
 
 export type InputCellProps = {
   row: number;
@@ -13,31 +13,27 @@ export const InputFormCell: React.FC<InputCellProps> = (
   props: InputCellProps
 ) => {
   const state = useGlobalContext();
-  const inputElement = useRef(null);
+  const ref = useRef(null);
   const ds = useDragSelect();
   const [variant, setVariant] = useState<any>('outlined');
   const windowSize = useWindowSize();
 
   useEffect(() => {
-    const element = inputElement.current;
+    const element = ref.current;
     if (element && ds) {
-      if (!state.isDefaultOptionSelected) {
-        ds.addSelectables(element);
-      } else {
-        ds.removeSelectables(element);
-      }
+      ds.addSelectables(element);
     }
-  }, [ds, inputElement, state.isDefaultOptionSelected]);
+  }, [ds, ref]);
 
   useEffect(() => {
-    const element = inputElement.current;
+    const element = ref.current;
     if (element) {
       (element as any).value = JSON.stringify({
         row: props.row,
         column: props.column,
       });
     }
-  }, [inputElement]);
+  }, [ref]);
 
   useEffect(() => {
     if (
@@ -63,20 +59,15 @@ export const InputFormCell: React.FC<InputCellProps> = (
       justifyContent={'center'}
       alignContent={'center'}
       sx={{
-        height:
-          // windowSize.width < 900
-          //   ? Math.max(...state.rowHeights) + 24
-          //   : Math.max(...state.rowHeights),
-          Math.max(...state.rowHeights),
+        height: Math.max(...state.rowHeights) + 24,
       }}
     >
       <Button
-        ref={inputElement}
+        ref={ref}
         variant={variant}
-        disabled={state.isDefaultOptionSelected}
         sx={{
-          height: '95%',
-          width: '95%',
+          height: '90%',
+          width: '100%',
           borderRadius: 1,
           boxSizing: 'border-box',
         }}

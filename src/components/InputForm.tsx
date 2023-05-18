@@ -15,7 +15,19 @@ export const InputForm: React.FC<Props> = (props) => {
   useEffect(() => {
     if (ds) {
       const id = ds.subscribe('callback', (e: any) => {
-        const selected = e.items
+        const items = e.items;
+
+        console.log('items', items);
+
+        if (items.map((item: { value: any }) => item.value).includes('clear')) {
+          update({
+            type: 'CLEAR_INPUT',
+          });
+          ds.clearSelection();
+          return;
+        }
+
+        const selected = items
           .map((item: any) => JSON.parse(item.value))
           .sort((a: any, b: any) => a.column - b.column)
           .sort((a: any, b: any) => a.row - b.row);
@@ -55,7 +67,7 @@ export const InputForm: React.FC<Props> = (props) => {
         ds?.unsubscribe('callback', undefined, id);
       };
     }
-  }, [state, ds]);
+  }, [ds]);
 
   return (
     <Grid
@@ -66,7 +78,8 @@ export const InputForm: React.FC<Props> = (props) => {
       md={12}
       sm={12}
       xs={12}
-      id={'drag-select-area'}
+      columnSpacing={1}
+      marginBottom={2}
     >
       <InputHeader />
       {state.choices.map((item, index: number) => (

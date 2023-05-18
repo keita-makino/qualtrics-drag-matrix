@@ -2,7 +2,7 @@ import { Grid, Typography, styled } from '@mui/material';
 import { InputFormCell } from './InputFormCell';
 import React, { useEffect } from 'react';
 import { useGlobalContext, useGlobalStateUpdateContext } from '../store';
-import { useWindowSize } from './useWindowSize';
+import { useWindowSize } from 'react-use';
 
 type InputFormColumnProps = {
   index: number;
@@ -28,6 +28,25 @@ export const InputFormColumn: React.FC<InputFormColumnProps> = (props) => {
         height: element.clientHeight,
         index: props.index + 1,
       });
+
+      if (windowSize.width < 900) {
+        if (!state.isMobile) {
+          update({
+            type: 'SET_HEADERHEIGHTS',
+            height: element.clientHeight * 2,
+            index: props.index + 1,
+          });
+        }
+        update({
+          type: 'SET_MOBILE',
+          value: true,
+        });
+      } else {
+        update({
+          type: 'SET_MOBILE',
+          value: false,
+        });
+      }
     }
   }, [ref, windowSize]);
 
@@ -56,17 +75,18 @@ export const InputFormColumn: React.FC<InputFormColumnProps> = (props) => {
         justifyContent={'center'}
         alignContent={'center'}
       >
-        <ResponsiveTypography
+        <Typography
           align={'center'}
           ref={ref}
           sx={{
             boxSizing: 'border-box',
             padding: '0.5rem',
             userSelect: 'none',
+            writingMode: windowSize.width < 900 ? 'vertical-rl' : 'unset',
           }}
         >
           {state.choices[props.index].label}
-        </ResponsiveTypography>
+        </Typography>
       </Grid>
       {state.inputs.map((item: { label: string }, index: number) => {
         return (
