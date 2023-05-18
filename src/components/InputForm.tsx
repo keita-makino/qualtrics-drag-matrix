@@ -18,11 +18,12 @@ export const InputForm: React.FC<Props> = (props) => {
         const items = e.items;
 
         console.log('items', items);
+        console.log('inputs', state.inputs);
+        update({
+          type: 'CLEAR_INPUT',
+        });
 
         if (items.map((item: { value: any }) => item.value).includes('clear')) {
-          update({
-            type: 'CLEAR_INPUT',
-          });
           ds.clearSelection();
           return;
         }
@@ -32,35 +33,23 @@ export const InputForm: React.FC<Props> = (props) => {
           .sort((a: any, b: any) => a.column - b.column)
           .sort((a: any, b: any) => a.row - b.row);
 
-        state.inputs
-          .map((_item: any, index: number) => index)
-          .forEach((item: any) => {
-            const rowItems = selected.filter(
-              (item2: any) => item2.row === item
-            );
-
-            if (rowItems.length > 0) {
-              update({
-                type: 'EDIT_INPUT',
-                input: {
-                  ...state.inputs[item],
-                  choices: rowItems.map(
-                    (item: any) => state.choices[item.column]
-                  ),
-                },
-                index: item,
-              });
-            } else {
-              update({
-                type: 'EDIT_INPUT',
-                input: {
-                  ...state.inputs[item],
-                  choices: [],
-                },
-                index: item,
-              });
-            }
+        selected.forEach((item: any) => {
+          update({
+            type: 'EDIT_INPUT',
+            input: {
+              htmlElement: state.inputs.filter(
+                (input) =>
+                  input.location.row === item.row &&
+                  input.location.column === item.column
+              )[0].htmlElement,
+              location: {
+                row: item.row,
+                column: item.column,
+              },
+              selected: true,
+            },
           });
+        });
       });
 
       return () => {

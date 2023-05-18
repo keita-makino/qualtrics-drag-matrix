@@ -14,23 +14,40 @@ type Props = {
 export const Container: React.FC<Props> = (props) => {
   const update = useGlobalStateUpdateContext();
 
-  const inputHTMLElements =
-    props.directionContainer.getElementsByTagName('input');
+  const inputHTMLElements = [
+    ...props.directionContainer.getElementsByClassName('ChoiceRow'),
+  ].map((item) => [...item.getElementsByTagName('td')]);
   const labelHTMLElements =
     props.directionContainer.getElementsByClassName('table-cell');
   const choiceHTMLElements =
     props.directionContainer.getElementsByClassName('single-answer');
 
+  console.log('inputHTMLElements', inputHTMLElements);
+
   useEffect(() => {
-    if ([...labelHTMLElements].length > 0) {
+    if ([...inputHTMLElements].length > 0) {
       update({
         type: 'ADD_INPUTS',
-        inputs: [...labelHTMLElements].map((item, index) => ({
-          label: item.children[0].children[0].textContent
-            ? item.children[0].children[0].textContent.replace(/\n/g, ' ')
-            : '',
-          htmlElement: inputHTMLElements[index],
-          choices: [],
+        inputs: [...inputHTMLElements]
+          .map((item, index) =>
+            item.map((item2, index2) => ({
+              htmlElement: item2,
+              selected: false,
+              location: {
+                row: index,
+                column: index2,
+              },
+            }))
+          )
+          .flat(),
+      });
+    }
+
+    if ([...labelHTMLElements].length > 0) {
+      update({
+        type: 'ADD_CHOICEROWS',
+        choiceRows: [...labelHTMLElements].map((item, index) => ({
+          label: item.textContent ? item.textContent : '',
         })),
       });
       update({
@@ -38,6 +55,7 @@ export const Container: React.FC<Props> = (props) => {
         numberOfRows: [...labelHTMLElements].length + 1,
       });
     }
+
     if ([...choiceHTMLElements].length > 0) {
       update({
         type: 'ADD_CHOICES',

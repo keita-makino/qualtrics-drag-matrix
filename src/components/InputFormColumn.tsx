@@ -88,7 +88,7 @@ export const InputFormColumn: React.FC<InputFormColumnProps> = (props) => {
           {state.choices[props.index].label}
         </Typography>
       </Grid>
-      {state.inputs.map((item: { label: string }, index: number) => {
+      {state.choiceRows.map((_item, index: number) => {
         return (
           <Grid container item xl={12} lg={12} md={12} sm={12} xs={12}>
             <InputFormCell row={index} column={props.index} />

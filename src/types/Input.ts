@@ -1,7 +1,14 @@
 export type Input = {
+  htmlElement?: HTMLTableCellElement;
+  selected: boolean;
+  location: {
+    row: number;
+    column: number;
+  };
+};
+
+export type ChoiceRow = {
   label: string;
-  htmlElement?: HTMLInputElement;
-  choices: Choice[];
 };
 
 export type Choice = {

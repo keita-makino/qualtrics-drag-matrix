@@ -21,7 +21,7 @@ export const InputHeader: React.FC = () => {
         position: windowSize.width < 900 ? 'absolute' : 'relative',
       }}
     >
-      {[{ label: '' }, ...state.inputs].map(
+      {[{ label: '' }, ...state.choiceRows].map(
         (item: { label: string }, index: number) => (
           <InputHeaderRow label={item.label} index={index} />
         )

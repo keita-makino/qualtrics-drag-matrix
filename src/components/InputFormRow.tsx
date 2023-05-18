@@ -34,7 +34,7 @@ export const InputFormRow: React.FC<InputRowProps> = (props: InputRowProps) => {
     >
       <Grid item xl lg md sm xs sx={{ minWidth: '33%' }} zeroMinWidth>
         <Typography sx={{ userSelect: 'none' }}>
-          {state.inputs[props.index].label}
+          {state.choiceRows[props.index].label}
         </Typography>
       </Grid>
       {state.choices.map((_item, index: number) => {

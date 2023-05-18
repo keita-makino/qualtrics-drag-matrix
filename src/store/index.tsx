@@ -1,11 +1,12 @@
 import React, { ReactNode, createContext, useContext, useReducer } from 'react';
 import { Bind, Input } from '../types';
-import { Choice } from '../types/Input';
+import { Choice, ChoiceRow } from '../types/Input';
 import { editInput } from './editInput';
 import { editHeaderHeights, editRowHeights } from './editHeight';
 
 export type GlobalState = {
   inputs: Input[];
+  choiceRows: ChoiceRow[];
   choices: Choice[];
   bind: Bind;
   headerHeights: number[];
@@ -15,6 +16,7 @@ export type GlobalState = {
 
 export const initialState: GlobalState = {
   inputs: [],
+  choiceRows: [],
   choices: [],
   bind: false,
   headerHeights: [],
@@ -36,13 +38,16 @@ export type Action =
       inputs: Input[];
     }
   | {
+      type: 'ADD_CHOICEROWS';
+      choiceRows: ChoiceRow[];
+    }
+  | {
       type: 'ADD_CHOICES';
       choices: Choice[];
     }
   | {
       type: 'EDIT_INPUT';
       input: Input;
-      index: number;
     }
   | {
       type: 'CLEAR_INPUT';
@@ -69,19 +74,30 @@ export const reducer = (state: GlobalState, action: Action): GlobalState => {
         ...state,
         inputs: [...state.inputs, ...action.inputs],
       };
+    case 'ADD_CHOICEROWS':
+      return {
+        ...state,
+        choiceRows: [...state.choiceRows, ...action.choiceRows],
+      };
     case 'ADD_CHOICES':
       return {
         ...state,
         choices: [...state.choices, ...action.choices],
       };
     case 'EDIT_INPUT':
-      return editInput(state, action.input, action.index);
+      return editInput(state, action.input);
     case 'CLEAR_INPUT':
+      state.inputs.forEach((item) => {
+        const next = item.htmlElement?.nextElementSibling;
+        if (next) {
+          next.classList.remove('q-checked');
+        }
+      });
       return {
         ...state,
         inputs: [...state.inputs].map((item) => ({
           ...item,
-          choices: [],
+          selected: false,
         })),
       };
     case 'INITIALIZE_ROWHEIGHTS':
