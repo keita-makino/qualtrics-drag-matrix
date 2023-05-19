@@ -9,10 +9,10 @@ export const editInput = (_state: GlobalState, input: Input) => {
 
   if (element != null) {
     element.selected = input.selected;
-    if (element.htmlElement != null) {
-      element.htmlElement.classList.contains('q-checked')
-        ? element.htmlElement.classList.remove('q-checked')
-        : element.htmlElement.classList.add('q-checked');
+    if (element.htmlElement?.type === 'checkbox') {
+      element.htmlElement.checked
+        ? (element.htmlElement.checked = false)
+        : (element.htmlElement.checked = true);
     }
   }
   return state;

@@ -18,7 +18,7 @@ export const Container: React.FC<Props> = (props) => {
     ...props.directionContainer.getElementsByClassName('ChoiceRow'),
   ].map((item) =>
     [...item.getElementsByTagName('td')].map(
-      (item) => item.getElementsByClassName('q-radio')[0]
+      (item) => item.getElementsByTagName('input')[0]
     )
   );
   const labelHTMLElements =
