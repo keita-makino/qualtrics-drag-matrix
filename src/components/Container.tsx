@@ -16,7 +16,11 @@ export const Container: React.FC<Props> = (props) => {
 
   const inputHTMLElements = [
     ...props.directionContainer.getElementsByClassName('ChoiceRow'),
-  ].map((item) => [...item.getElementsByTagName('td')]);
+  ].map((item) =>
+    [...item.getElementsByTagName('td')].map(
+      (item) => item.getElementsByClassName('q-radio')[0]
+    )
+  );
   const labelHTMLElements =
     props.directionContainer.getElementsByClassName('table-cell');
   const choiceHTMLElements =

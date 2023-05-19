@@ -1,5 +1,5 @@
 export type Input = {
-  htmlElement?: HTMLTableCellElement;
+  htmlElement?: Element;
   selected: boolean;
   location: {
     row: number;

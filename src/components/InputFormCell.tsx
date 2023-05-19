@@ -36,15 +36,17 @@ export const InputFormCell: React.FC<InputCellProps> = (
   }, [ref]);
 
   useEffect(() => {
-    // if (
-    //   state.inputs[props.row].choices
-    //     .map((item: any) => item.value)
-    //     .includes(props.column)
-    // ) {
-    //   setVariant('contained');
-    // } else {
-    //   setVariant('outlined');
-    // }
+    if (
+      state.inputs.find(
+        (item) =>
+          item.location.row === props.row &&
+          item.location.column === props.column
+      )?.selected
+    ) {
+      setVariant('contained');
+    } else {
+      setVariant('outlined');
+    }
   }, [state]);
 
   return (
