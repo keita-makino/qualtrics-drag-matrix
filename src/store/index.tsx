@@ -88,9 +88,8 @@ export const reducer = (state: GlobalState, action: Action): GlobalState => {
       return editInput(state, action.input);
     case 'CLEAR_INPUT':
       state.inputs.forEach((item) => {
-        const next = item.htmlElement?.nextElementSibling;
-        if (next) {
-          next.classList.remove('q-checked');
+        if (item.htmlElement?.type === 'checkbox') {
+          item.htmlElement.checked = false;
         }
       });
       return {
