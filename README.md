@@ -1,4 +1,4 @@
-# qualtrics-frag-matrix
+# qualtrics-drag-matrix
 
 A react-based component that displays a drag-selectable matrix question on [Qualtrics](https://www.qualtrics.com).
 
