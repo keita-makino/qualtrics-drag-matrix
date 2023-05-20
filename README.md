@@ -17,7 +17,7 @@ A react-based component that displays a drag-selectable matrix question on [Qual
 
 ## Header Settings
 
-1. In the survey edit screen, click "Look & Feel" on the top-right.
+1. In the survey edit screen, click "Look & Feel" on the top-left.
 1. Select the "General" tab and then edit the "Header".
 1. Click the "<>" icon to enter the coding view.
 1. Copy and paste the following code.
