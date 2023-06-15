@@ -26,8 +26,6 @@ export const Container: React.FC<Props> = (props) => {
   const choiceHTMLElements =
     props.directionContainer.getElementsByClassName('single-answer');
 
-  console.log('inputHTMLElements', inputHTMLElements);
-
   useEffect(() => {
     if ([...inputHTMLElements].length > 0) {
       update({

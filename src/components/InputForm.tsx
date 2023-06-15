@@ -17,8 +17,6 @@ export const InputForm: React.FC<Props> = (props) => {
       const id = ds.subscribe('callback', (e: any) => {
         const items = e.items;
 
-        console.log('items', items);
-        console.log('inputs', state.inputs);
         update({
           type: 'CLEAR_INPUT',
         });
