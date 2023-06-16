@@ -5,6 +5,7 @@ import { InputForm } from './InputForm';
 import { Grid } from '@mui/material';
 import { DragSelectProvider } from '../contexts/DragSelectContext';
 import { useWindowSize } from 'react-use';
+import { Warning } from './Warning';
 
 type Props = {
   directionContainer: HTMLElement;
@@ -26,6 +27,14 @@ export const Container: React.FC<Props> = (props) => {
   const choiceHTMLElements =
     props.directionContainer.getElementsByClassName('single-answer');
 
+  const targetHours = Number(
+    props.directionContainer
+      .getElementsByClassName('QuestionText')[0]
+      .innerHTML.replaceAll(/(.|\n)*(\d{1,2})(.|\n)*/g, '$2')
+  );
+
+  console.log(targetHours);
+
   useEffect(() => {
     if ([...inputHTMLElements].length > 0) {
       update({
@@ -42,6 +51,13 @@ export const Container: React.FC<Props> = (props) => {
             }))
           )
           .flat(),
+      });
+    }
+
+    if (targetHours > 0) {
+      update({
+        type: 'SET_TARGET_HOURS',
+        value: targetHours,
       });
     }
 
@@ -105,6 +121,7 @@ export const Container: React.FC<Props> = (props) => {
       }}
     >
       <Grid container id={'drag-select-area'}>
+        <Warning />
         <InputForm />
         <ClearButton />
       </Grid>

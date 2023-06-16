@@ -12,6 +12,7 @@ export type GlobalState = {
   headerHeights: number[];
   rowHeights: number[];
   isMobile: boolean;
+  targetHours: number;
 };
 
 export const initialState: GlobalState = {
@@ -22,6 +23,7 @@ export const initialState: GlobalState = {
   headerHeights: [],
   rowHeights: [],
   isMobile: false,
+  targetHours: 0,
 };
 
 export type Action =
@@ -65,6 +67,10 @@ export type Action =
   | {
       type: 'SET_MOBILE';
       value: boolean;
+    }
+  | {
+      type: 'SET_TARGET_HOURS';
+      value: number;
     };
 
 export const reducer = (state: GlobalState, action: Action): GlobalState => {
@@ -117,6 +123,11 @@ export const reducer = (state: GlobalState, action: Action): GlobalState => {
       return {
         ...state,
         isMobile: action.value,
+      };
+    case 'SET_TARGET_HOURS':
+      return {
+        ...state,
+        targetHours: action.value,
       };
     default:
       return state;
