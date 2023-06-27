@@ -25,13 +25,13 @@ export const Warning: React.FC<Props> = (props) => {
     <Grid container>
       {totalHours * 0.75 > state.targetHours ? (
         <Typography variant={'h5'} sx={{ color: 'red' }}>
-          Warning: It seems that your work hours are more than what you
-          indicated in the previous question. Are you sure?
+          It seems that your work hours are different from what you indicated in
+          the previous questions for the same day. Are you sure?
         </Typography>
       ) : null}
       {uniqueRowIndices.length !== rowIndices.length ? (
         <Typography variant={'h5'} sx={{ color: 'red' }}>
-          Warning: You select two or more columns in a row. Are you sure?
+          Warning: You select two or more columns in a row. Is this correct?
         </Typography>
       ) : null}
     </Grid>
