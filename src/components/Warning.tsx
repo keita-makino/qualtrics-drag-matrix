@@ -25,7 +25,7 @@ export const Warning: React.FC<Props> = (props) => {
     <Grid container>
       {totalHours * 0.75 > state.targetHours ? (
         <Typography variant={'h5'} sx={{ color: 'red' }}>
-          It seems that your work hours are different from what you indicated in
+          Warning: It seems that your work hours are different from what you indicated in
           the previous questions for the same day. Are you sure?
         </Typography>
       ) : null}
