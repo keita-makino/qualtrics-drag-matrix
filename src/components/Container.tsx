@@ -34,8 +34,6 @@ export const Container: React.FC<Props> = (props) => {
       .innerHTML.replaceAll(/(.|\n)*\s(\d{1,2})(.|\n)*/g, '$2')
   );
 
-  console.log(targetHours);
-
   useEffect(() => {
     if ([...inputHTMLElements].length > 0) {
       update({
