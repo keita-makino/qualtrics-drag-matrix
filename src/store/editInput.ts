@@ -7,8 +7,6 @@ export const editInput = (_state: GlobalState, input: Input) => {
     (item) => JSON.stringify(item.location) === JSON.stringify(input.location)
   );
 
-  console.log('editInput', state.inputs);
-
   if (element != null) {
     element.selected = input.selected;
     if (element.htmlElement?.type === 'checkbox') {

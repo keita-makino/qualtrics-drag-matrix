@@ -32,7 +32,7 @@ export const Container: React.FC<Props> = (props) => {
     props.directionContainer
       .getElementsByClassName('QuestionText BorderColor')[0]
       .getElementsByTagName('strong')[0]
-      .innerHTML.replaceAll(/.*(\d{1,2}).*/g, '$1')
+      .innerHTML.replaceAll(/(\d{1,2}).*/g, '$1')
   );
 
   useEffect(() => {
