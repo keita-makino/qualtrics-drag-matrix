@@ -30,8 +30,8 @@ export const Container: React.FC<Props> = (props) => {
 
   const targetHours = Number(
     props.directionContainer
-      .getElementsByClassName('QuestionText')[0]
-      .innerHTML.replaceAll(/(.|\n)*\s(\d{1,2})(.|\n)*/g, '$2')
+      .querySelectorAll('[class^=QuestionText]')[0]
+      .innerHTML.replaceAll(/.*(\d{1,2}).*/g, '$1')
   );
 
   useEffect(() => {
