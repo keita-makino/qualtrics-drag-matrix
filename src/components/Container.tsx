@@ -10,6 +10,7 @@ import { Warning } from './Warning';
 type Props = {
   directionContainer: HTMLElement;
   isMobile: boolean;
+  language: 'EN' | 'ES' | 'JA';
 };
 
 export const Container: React.FC<Props> = (props) => {
@@ -51,6 +52,20 @@ export const Container: React.FC<Props> = (props) => {
             }))
           )
           .flat(),
+      });
+    }
+
+    if (targetHours > 0) {
+      update({
+        type: 'SET_TARGET_HOURS',
+        value: targetHours,
+      });
+    }
+
+    if (props.language) {
+      update({
+        type: 'SET_LANGUAGE',
+        value: props.language,
       });
     }
 

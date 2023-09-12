@@ -13,6 +13,7 @@ export type GlobalState = {
   rowHeights: number[];
   isMobile: boolean;
   targetHours: number;
+  language: 'EN' | 'ES' | 'JA';
 };
 
 export const initialState: GlobalState = {
@@ -24,6 +25,7 @@ export const initialState: GlobalState = {
   rowHeights: [],
   isMobile: false,
   targetHours: 0,
+  language: 'EN',
 };
 
 export type Action =
@@ -71,6 +73,10 @@ export type Action =
   | {
       type: 'SET_TARGET_HOURS';
       value: number;
+    }
+  | {
+      type: 'SET_LANGUAGE';
+      value: 'EN' | 'ES' | 'JA';
     };
 
 export const reducer = (state: GlobalState, action: Action): GlobalState => {
@@ -128,6 +134,11 @@ export const reducer = (state: GlobalState, action: Action): GlobalState => {
       return {
         ...state,
         targetHours: action.value,
+      };
+    case 'SET_LANGUAGE':
+      return {
+        ...state,
+        language: action.value,
       };
     default:
       return state;
