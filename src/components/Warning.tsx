@@ -21,6 +21,8 @@ export const Warning: React.FC<Props> = (props) => {
     }
   }, 0);
 
+  console.log(totalHours, state.targetHours);
+
   return (
     <Grid container>
       {totalHours * 0.75 > state.targetHours ? (
