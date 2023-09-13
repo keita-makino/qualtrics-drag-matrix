@@ -52,7 +52,7 @@ export const Warning: React.FC<Props> = (props) => {
         <Typography variant={'h5'} sx={{ color: 'red' }}>
           {state.language === 'EN' ? (
             <>
-              Warning: You select two or more rows in a column. Is this correct?
+              Warning: You select two or more columns in a row. Is this correct?
             </>
           ) : state.language === 'ES' ? (
             <>
